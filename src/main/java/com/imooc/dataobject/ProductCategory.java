@@ -1,9 +1,15 @@
 package com.imooc.dataobject;
 
+
+
+import lombok.Data;
+
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.util.Date;
-
+@Data
+@Entity
 public class ProductCategory {
     @Id
     @GeneratedValue

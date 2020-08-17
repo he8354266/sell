@@ -11,8 +11,7 @@ import javax.persistence.Id;
 @Data
 @Entity
 @ToString
-@Getter
-@Setter
+
 public class SellerInfo {
    @Id
     private String sellerId;
