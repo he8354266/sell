@@ -3,6 +3,7 @@ package com.imooc.service;
 import com.imooc.dataobject.ProductInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -14,6 +15,10 @@ public interface ProductService {
     Page<ProductInfo> findAll(Pageable pageable);
 
     ProductInfo save(ProductInfo productInfo);
+
+    ProductInfo onSale(String productId);
+
+    ProductInfo offSale(@RequestParam("productId") String productId);
 
     //加库存
     //void increaseStock(List<>)
