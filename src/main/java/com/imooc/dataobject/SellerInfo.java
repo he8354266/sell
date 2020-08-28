@@ -16,8 +16,6 @@ public class SellerInfo {
    @Id
     private String sellerId;
 
-
-
     private String username;
 
     private String password;

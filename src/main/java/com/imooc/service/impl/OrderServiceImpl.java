@@ -12,6 +12,7 @@ import com.imooc.repository.OrderDetailRepository;
 import com.imooc.repository.OrderMasterRepository;
 import com.imooc.service.OrderService;
 import com.imooc.service.ProductService;
+import com.imooc.service.WebSocket;
 import com.imooc.utils.KeyUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,8 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderMasterRepository orderMasterRepository;
 
+    @Autowired
+    private WebSocket webSocket;
 
     @Transactional
     @Override
@@ -71,6 +74,9 @@ public class OrderServiceImpl implements OrderService {
         System.out.println("orderDtO=====" + orderDtO);
         System.out.println("orderMaster=====" + orderMaster);
         orderMasterRepository.save(orderMaster);
+
+        //发送websocket消息
+        webSocket.sendMessage(orderDtO.getOrderId());
         return orderDtO;
     }
 
@@ -93,6 +99,7 @@ public class OrderServiceImpl implements OrderService {
         }
         OrderDtO orderDtO = new OrderDtO();
         BeanUtils.copyProperties(orderMaster, orderDtO);
+        orderDtO.setOrderDetailList(orderDetailList);
         return orderDtO;
     }
 

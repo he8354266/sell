@@ -3,10 +3,7 @@ server:
   servlet:
     context-path: /sell
 
-limit:
-  minMoney:0.01
-  maxMoney:9999
-  descprtion:最少要发${limit.minMoney}元, 最多${limit.maxMoney}元
+
 
 spring:
   freemarker:
@@ -20,5 +17,32 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  redis:
+    host: 127.0.0.1
+    port: 6379
+
+wechat:
+  # 公众账号, 授权
+  mpAppId: wxd898fcb01713c658
+  mpAppSecret:
+
+  # 开放平台,  卖家扫码登录用
+  openAppId: wx6ad144e54af67d87
+  openAppSecret: 91a2ff6d38a2bbccfb7e9xxxxxx
+
+  # 支付/商户号
+  mchId: 1483469312
+  mchKey: 06C56A89949D617xxxxxxxxxxx
+  # 发起支付不需要证书, 退款需要
+  keyPath:
+  notifyUrl: http://sell.natapp4.cc/sell/pay/notify
+  templateId:
+    orderStatus: e-Cqq67QxD6YNI41iRiqawEYdFavW_7pc7LyEMb-yeQ
 
 
+projectUrl:
+  wechatMpAuthorize: http://127.0.0.1:8081
+  wechatOpenAuthorize: http://127.0.0.1:8081
+  sell: http://127.0.0.1:8081
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
