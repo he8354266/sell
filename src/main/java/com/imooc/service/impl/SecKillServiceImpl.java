@@ -1,8 +1,10 @@
 package com.imooc.service.impl;
 
 import com.imooc.exception.SellException;
+import com.imooc.service.RedisLock;
 import com.imooc.service.SecKillService;
 import com.imooc.utils.KeyUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -17,6 +19,9 @@ import java.util.Map;
  */
 @Service
 public class SecKillServiceImpl implements SecKillService {
+    private static final int TIMEOUT = 10 * 1000; //超时时间 10s
+    @Autowired
+    private RedisLock redisLock;
     /**
      * 国庆活动，皮蛋粥特价，限量100000份
      */
@@ -41,7 +46,12 @@ public class SecKillServiceImpl implements SecKillService {
     }
 
     @Override
-    public  void orderProductMockDiffUser(String productId) {
+    public void orderProductMockDiffUser(String productId) {
+        //加锁
+        long time = System.currentTimeMillis() + TIMEOUT;
+        if (!redisLock.lock(productId, String.valueOf(time))) {
+            throw new SellException(101, "人太多了，换个姿势试试");
+        }
         int stockNum = stock.get(productId);
         if (stockNum == 0) {
             throw new SellException(100, "活动结束");
@@ -55,7 +65,8 @@ public class SecKillServiceImpl implements SecKillService {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            stock.put(productId,stockNum);
+            stock.put(productId, stockNum);
         }
+        redisLock.unlock(productId, String.valueOf(time));
     }
 }

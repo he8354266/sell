@@ -20,7 +20,11 @@ spring:
   redis:
     host: 127.0.0.1
     port: 6379
-
+upyun:
+    bucketName: tupians11
+    userName:  he8354266
+    password:  heyang94216
+    imageHost:  http://xxx.com/
 wechat:
   # 公众账号, 授权
   mpAppId: wxd898fcb01713c658

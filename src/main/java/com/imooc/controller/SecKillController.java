@@ -1,5 +1,6 @@
 package com.imooc.controller;
 
+import com.imooc.service.RedisLock;
 import com.imooc.service.SecKillService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,8 @@ public class SecKillController {
      */
     @GetMapping("/order/{productId}")
     public String skill(@PathVariable String productId) {
+        //加锁
+
         log.info("productId===", productId);
         secKillService.orderProductMockDiffUser(productId);
         return secKillService.querySecKillProductInfo(productId);
